@@ -1,6 +1,9 @@
 package pointers
 
-import "fmt"
+import (
+	"errors"
+	"fmt"
+)
 
 // a new type we can declare methods on
 type Bitcoin int
@@ -10,10 +13,16 @@ type Wallet struct {
 	balance Bitcoin
 }
 
-// Pointers let us point to some values and let us change them
-// Rather than taking a copy of the whole Wallet, we instead take a pointer to that wallet so we can change the original values
+// lets you define how your type is printed when used with the %s format string in prints
+type Stringer interface {
+	String() string
+}
+
+func (b Bitcoin) String() string {
+	return fmt.Sprintf("%d BTC", b)
+}
+
 func (w *Wallet) Deposit(amount Bitcoin) {
-	fmt.Printf("address of balance in Deposit is %v \n", &w.balance)
 	w.balance += amount
 }
 
@@ -21,10 +30,12 @@ func (w *Wallet) Balance() Bitcoin {
 	return w.balance
 }
 
-type Stringer interface {
-	String() string
-}
+func (w *Wallet) Withdraw(amount Bitcoin) error {
 
-func (b Bitcoin) String() string {
-	return fmt.Sprintf("%d BTC", b)
+	if amount > w.balance {
+		return errors.New("oh no")
+	}
+
+	w.balance -= amount
+	return nil
 }
