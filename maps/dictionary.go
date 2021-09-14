@@ -4,6 +4,6 @@ package main
 type Dictionary map[string]string
 
 // with the custom type defined we can create the Search method
-func (d Dictionary) Search(word string) string {
-	return d[word]
+func (d Dictionary) Search(word string) (string, error) {
+	return d[word], nil
 }
