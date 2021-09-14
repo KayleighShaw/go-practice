@@ -16,18 +16,19 @@ func TestSearch(t *testing.T) {
 	})
 
 	t.Run("unknown word", func(t *testing.T) {
-		_, err := dictionary.Search("unknown")
-		want := "could not find the word you were looking for"
+		_, got := dictionary.Search("unknown")
 
-		// also protecting assertStrings to ensure we don't called .Error() on nil
-		if err == nil {
-			t.Fatal("expected to get an error.")
-		}
-
-		// errors can be converted to a string with the .Error() method
-		assertStrings(t, err.Error(), want)
+		assertError(t, got, ErrNotFound)
 	})
 
+}
+
+func assertError(t testing.TB, got, want error) {
+	t.Helper()
+
+	if got != want {
+		t.Errorf("got error %q want %q", got, want)
+	}
 }
 
 // // helps make the implementation more general
