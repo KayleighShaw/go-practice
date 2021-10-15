@@ -4,23 +4,17 @@ import "testing"
 
 func TestCanFastAttack(t *testing.T) {
 	t.Run("the knight is asleep", func(t *testing.T) {
-		isAwake := false
-		awakeBool := CanFastAttack(isAwake)
-		expected := true
+		got := CanFastAttack(false)
+		want := true
 
-		if awakeBool != expected {
-			t.Errorf("expected '%v' but got '%v'", expected, awakeBool)
-		}
+		assertError(t, got, want)
 	})
 
 	t.Run("the knight is awake", func(t *testing.T) {
-		isAwake := true
-		awakeBool := CanFastAttack(isAwake)
-		expected := false
+		got := CanFastAttack(true)
+		want := false
 
-		if awakeBool != expected {
-			t.Errorf("expected '%v' but got '%v'", expected, awakeBool)
-		}
+		assertError(t, got, want)
 	})
 }
 
@@ -29,27 +23,21 @@ func TestCanSpy(t *testing.T) {
 		got := CanSpy(false, true, false)
 		want := true
 
-		if got != want {
-			t.Errorf("expected %v but got %v", want, got)
-		}
+		assertError(t, got, want)
 	})
 
 	t.Run("nobody is awake", func(t *testing.T) {
 		got := CanSpy(false, false, false)
 		want := false
 
-		if got != want {
-			t.Errorf("expected %v but got %v", want, got)
-		}
+		assertError(t, got, want)
 	})
 
 	t.Run("everyone is awake", func(t *testing.T) {
 		got := CanSpy(true, true, true)
 		want := true
 
-		if got != want {
-			t.Errorf("expected %v but got %v", want, got)
-		}
+		assertError(t, got, want)
 	})
 }
 
@@ -58,36 +46,28 @@ func TestCanSignal(t *testing.T) {
 		got := CanSignalPrisoner(false, true)
 		want := true
 
-		if got != want {
-			t.Errorf("expected %v but got %v", want, got)
-		}
+		assertError(t, got, want)
 	})
 
 	t.Run("archer is awake, prisoner is sleeping", func(t *testing.T) {
 		got := CanSignalPrisoner(true, false)
 		want := false
 
-		if got != want {
-			t.Errorf("expected %v but got %v", want, got)
-		}
+		assertError(t, got, want)
 	})
 
 	t.Run("both are awake", func(t *testing.T) {
 		got := CanSignalPrisoner(true, true)
 		want := false
 
-		if got != want {
-			t.Errorf("expected %v but got %v", want, got)
-		}
+		assertError(t, got, want)
 	})
 
 	t.Run("both are asleep", func(t *testing.T) {
 		got := CanSignalPrisoner(false, false)
 		want := false
 
-		if got != want {
-			t.Errorf("expected %v but got %v", want, got)
-		}
+		assertError(t, got, want)
 	})
 }
 
@@ -145,4 +125,11 @@ func TestCanFreePrisoner(t *testing.T) {
 			t.Errorf("expected %v but got %v", want, got)
 		}
 	})
+}
+
+func assertError(t testing.TB, got, want bool) {
+	t.Helper()
+	if got != want {
+		t.Errorf("expected %v but got %v", want, got)
+	}
 }
