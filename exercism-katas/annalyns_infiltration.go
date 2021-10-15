@@ -2,7 +2,7 @@ package annalyn
 
 // CanFastAttack can be executed only when the knight is sleeping
 func CanFastAttack(knightIsAwake bool) bool {
-	if knightIsAwake {
+	if !knightIsAwake {
 		return true
 	}
 	return false
@@ -24,8 +24,25 @@ func CanSignalPrisoner(archerIsAwake, prisonerIsAwake bool) bool {
 	return false
 }
 
+//TODO: this is broken - fix meee
 // // CanFreePrisoner can be executed if the prisoner is awake and the other 2 characters are asleep
 // // or if Annalyn's pet dog is with her and the archer is sleeping
-// func CanFreePrisoner(knightIsAwake, archerIsAwake, prisonerIsAwake, petDogIsPresent bool) bool {
-// 	panic("Please implement the CanFreePrisoner() function")
-// }
+func CanFreePrisoner(knightIsAwake, archerIsAwake, prisonerIsAwake, petDogIsPresent bool) bool {
+	if !knightIsAwake && !archerIsAwake && prisonerIsAwake && !petDogIsPresent {
+		return true
+	}
+
+	if knightIsAwake && !archerIsAwake && petDogIsPresent {
+		return true
+	}
+
+	if archerIsAwake && petDogIsPresent {
+		return false
+	}
+
+	if !knightIsAwake && petDogIsPresent {
+		return true
+	}
+
+	return false
+}
